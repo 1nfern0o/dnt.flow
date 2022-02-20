@@ -1,17 +1,16 @@
 import React from 'react';
-import axios from "axios";
 
 const FormButton = ({message, setMessage}) => {
 
-    const testREST = async () => {
 
-        // const result = await urlAPI.fetch('hello');
-
-        return await axios.get('https://i3wn1o9ojd.execute-api.eu-central-1.amazonaws.com');
-
+    const apiTelegram = () => {
+        try {
+            const url = `https://api.telegram.org/bot5256664083:AAEuDa8tMQ_TCLX6GLkXeh5vLmMHU6w2hWo/sendMessage?chat_id=-623090000&parse_mode=html&text=${message}`;
+            return fetch(url);
+        } catch (e) {
+            console.log(e);
+        }
     }
-
-    console.log(testREST());
 
     return (
         <div className="form-btn">
@@ -19,7 +18,10 @@ const FormButton = ({message, setMessage}) => {
                 <button className="btn" onClick={() => setMessage('')}>Clear</button>
             </div>
             <div className="form-btn__item">
-                <button className="btn" onClick={() => console.log(message)}>Send</button>
+                <button className="btn" onClick={() => alert(`Your massage: ${message}`)}>Send</button>
+            </div>
+            <div className="form-btn__item">
+                <button className="btn" onClick={() => apiTelegram(message)}>Send to telegram</button>
             </div>
         </div>
     );

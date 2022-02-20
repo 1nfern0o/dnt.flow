@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FormButton from "./FormButton";
 
 const CustomTextarea = () => {
@@ -9,6 +9,21 @@ const CustomTextarea = () => {
     const [btnStrike, setBtnStrike] = useState(false);
     const [btnU, setBtnU] = useState(false);
     const [btnPre, setBtnPre] = useState(false);
+
+    const apiTest = async () => {
+        try {
+            const response = await fetch('https://i3wn1o9ojd.execute-api.eu-central-1.amazonaws.com');
+            let data = await response.text();
+            setMessage(data);
+            return data;
+        } catch (e) {
+            console.log("Ошибка HTTP: " + e);
+        }
+    }
+
+    useEffect(() => {
+        apiTest();
+    }, []);
 
     const checkStyleText = (value) => (style, setStyle) => {
         setStyle(!style);
@@ -40,7 +55,7 @@ const CustomTextarea = () => {
                         <button className={`btn ${btnU ? 'active' : ''}`} onClick={() => checkStyleText(!btnU ? '<u>' : '</u>')(btnU, setBtnU)}>U</button>
                     </div>
                     <div className="custom-textarea__btn">
-                        <button className={`btn ${btnPre ? 'active' : ''}`} onClick={() => checkStyleText(!btnPre ? '\n' + '```c++' + '\n' : '\n' + '```' + '\n')(btnPre, setBtnPre)}>Pre</button>
+                        <button className={`btn ${btnPre ? 'active' : ''}`} onClick={() => checkStyleText(!btnPre ? '<pre>' : '</pre>')(btnPre, setBtnPre)}>Pre</button>
                     </div>
                 </div>
                 <div className="custom-textarea__item">

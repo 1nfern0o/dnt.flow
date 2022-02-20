@@ -2,8 +2,8 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <div>
-            Roman Test
+        <div className="header">
+            Roman AWS Test program
         </div>
     );
 };
